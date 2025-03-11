@@ -1,0 +1,68 @@
+<!-- hashmicro_project/templates/product_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Product List{% endblock %}
+
+{% block content %}
+<h1>Product List</h1>
+{% if perms.hashmicro_project.add_product %}
+<a href="{% url 'product_create' %}" class="btn btn-primary mb-3">Add Product</a>
+{% endif %}
+
+
+<form method="post" action="{% url 'product_bulk_delete' %}">
+    {% csrf_token %}
+    <table class="table">
+        <thead>
+            <tr>
+                {% if perms.hashmicro_project.delete_product %}
+                    <th>Select</th>
+                {% endif %}
+                <th>Name</th>
+                <th>Price</th>
+                <th>Barcode</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    {% if perms.hashmicro_project.delete_product %}
+                        <td>
+                            <input type="checkbox" name="products" value="{{ product.id }}">
+                        </td>
+                    {% endif %}
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.barcode }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>
+                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-info btn-sm">View</a>
+                        {% if perms.hashmicro_project.can_change_product %}
+                            <a href="{% url 'product_update' product.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add this script to product_list.html -->
+
+    {% if perms.hashmicro_project.delete_product %}
+        <button type="submit" class="btn btn-danger" onclick="confirmDelete()">Delete Selected</button>
+    {% endif %}
+</form>
+
+<script>
+    function confirmDelete() {
+        const selectedProducts = document.querySelectorAll('input[name="products"]:checked');
+        if (selectedProducts.length === 0) {
+            alert('Please select at least one product to delete.');
+        } else if (confirm('Are you sure you want to delete the selected products?')) {
+            document.getElementById('bulk-delete-form').submit();
+        }
+    }
+</script>
+{% endblock %}

@@ -131,3 +131,9 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# project/settings.py
+LOGIN_REDIRECT_URL = 'product_list'  # Redirect after login
+LOGOUT_REDIRECT_URL = 'product_list'  # Redirect after logout
+
+LOGIN_URL = 'login' 
