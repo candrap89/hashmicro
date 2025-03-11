@@ -27,9 +27,9 @@ pip install -r requirements.txt
 echo "Running migrations..."
 python manage.py migrate
 
-# Create a superuser (optional)
-# echo "Creating superuser..."
-# python manage.py createsuperuser
+Create a superuser (optional)
+echo "Creating superuser..."
+python manage.py createsuperuser
 
 # Collect static files (if needed)
 echo "Collecting static files..."
