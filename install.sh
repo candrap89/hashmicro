@@ -28,8 +28,8 @@ echo "Running migrations..."
 python manage.py migrate
 
 # Create a superuser (optional)
-echo "Creating superuser..."
-python manage.py createsuperuser
+# echo "Creating superuser..."
+# python manage.py createsuperuser
 
 # Collect static files (if needed)
 echo "Collecting static files..."
@@ -37,6 +37,6 @@ python manage.py collectstatic --noinput
 
 # Start Gunicorn
 echo "Starting Gunicorn..."
-gunicorn --config gunicorn.conf.py hashmicro_project.wsgi:application
+gunicorn --config gunicorn.conf.py project.wsgi:application
 
 echo "Installation complete! Access the application at http://<server-ip>:8000/hashmicro_project/"
